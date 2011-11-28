@@ -1,0 +1,6 @@
+.DS_Store
+vendor/*
+app/config/parameters.ini
+app/cache/*
+app/logs/*
+web/bundles/*

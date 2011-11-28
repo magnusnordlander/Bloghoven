@@ -1,0 +1,12 @@
+BloghovenAbstractThemeBundle:
+    resource: "@BloghovenAbstractThemeBundle/Resources/config/routing.xml"
+    prefix:   /
+
+BloghovenBlogBundle:
+    resource: "@BloghovenBlogBundle/Resources/config/routing.xml"
+    prefix:   /
+
+# Internal routing configuration to handle ESI
+#_internal:
+#   resource: "@FrameworkBundle/Resources/config/routing/internal.xml"
+#   prefix:   /_internal

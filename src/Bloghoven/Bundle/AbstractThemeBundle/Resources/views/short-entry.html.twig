@@ -1,0 +1,9 @@
+<article>
+  <header>
+    <h1>{{entry.title}}</h1>
+  </header>
+  {{entry.content | markdown}}
+  <footer>
+    <p><small>Published: <time pubdate="pubdate">{{entry.postedAt|date("F jS \\a\\t g:ia")}}</time></small></p>
+  </footer>
+</article>

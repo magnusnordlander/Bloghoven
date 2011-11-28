@@ -1,0 +1,26 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="bloghoven.doctrine_orm_entry_provider.class">Bloghoven\Bundle\BlogBundle\EntryProvider\DoctrineORMEntryProvider</parameter>
+        <parameter key="bloghoven.doctrine_orm_entry.alias">BloghovenBlogBundle:Entry</parameter>
+    </parameters>
+
+    <services>
+      <service id="bloghoven.doctrine_orm_entry_repo" 
+               class="Doctrine\ORM\EntityRepository"
+               factory-service="doctrine"
+               factory-method="getRepository">
+        <argument>%bloghoven.doctrine_orm_entry.alias%</argument>
+      </service>
+
+      <service id="bloghoven.doctrine_orm_entry_provider" class="%bloghoven.doctrine_orm_entry_provider.class%">
+        <argument type="service" id="bloghoven.doctrine_orm_entry_repo" />
+      </service>
+
+      <service id="bloghoven.entry_provider" alias="bloghoven.doctrine_orm_entry_provider" />
+    </services>
+</container>

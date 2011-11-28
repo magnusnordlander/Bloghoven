@@ -1,0 +1,7 @@
+{% extends "BloghovenAbstractThemeBundle::layout.html.twig" %}
+
+{% block main %}
+  {% for entry in pager.currentPageResults %}
+    {% include "BloghovenAbstractThemeBundle::short-entry.html.twig" with {'entry': entry} only %}
+  {% endfor %}
+{% endblock %}
