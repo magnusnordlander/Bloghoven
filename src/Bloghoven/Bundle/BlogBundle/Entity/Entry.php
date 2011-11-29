@@ -2,64 +2,43 @@
 
 namespace Bloghoven\Bundle\BlogBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
 /**
  * Bloghoven\Bundle\BlogBundle\Entity\Entry
- *
- * @ORM\Table()
- * @ORM\Entity(repositoryClass="Bloghoven\Bundle\BlogBundle\Entity\EntryRepository")
  */
 class Entry
 {
     /**
      * @var integer $id
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var string $title
-     *
-     * @ORM\Column(name="title", type="string", length=255)
      */
     private $title;
 
     /**
      * @var string $excerpt
-     *
-     * @ORM\Column(name="excerpt", type="string", length=4096)
      */
     private $excerpt;
 
     /**
-     * @var text $content
-     *
-     * @ORM\Column(name="content", type="text")
+     * @var string $content
      */
     private $content;
 
     /**
-     * @var datetime $posted_at
-     *
-     * @ORM\Column(name="posted_at", type="datetime")
+     * @var DateTime $posted_at
      */
     private $posted_at;
 
     /**
-     * @var datetime $modified_at
-     *
-     * @ORM\Column(name="modified_at", type="datetime")
+     * @var DateTime $modified_at
      */
     private $modified_at;
 
     /**
      * @var boolean $is_draft
-     *
-     * @ORM\Column(name="is_draft", type="boolean")
      */
     private $is_draft;
 
@@ -137,9 +116,9 @@ class Entry
     /**
      * Set posted_at
      *
-     * @param datetime $postedAt
+     * @param DateTime $postedAt
      */
-    public function setPostedAt($postedAt)
+    public function setPostedAt(\DateTime $postedAt)
     {
         $this->posted_at = $postedAt;
     }
@@ -159,7 +138,7 @@ class Entry
      *
      * @param datetime $modifiedAt
      */
-    public function setModifiedAt($modifiedAt)
+    public function setModifiedAt(\DateTime $modifiedAt)
     {
         $this->modified_at = $modifiedAt;
     }
@@ -167,7 +146,7 @@ class Entry
     /**
      * Get modified_at
      *
-     * @return datetime 
+     * @return DateTime 
      */
     public function getModifiedAt()
     {

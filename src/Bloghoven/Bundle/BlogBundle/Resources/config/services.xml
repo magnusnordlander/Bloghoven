@@ -7,6 +7,8 @@
     <parameters>
         <parameter key="bloghoven.doctrine_orm_entry_provider.class">Bloghoven\Bundle\BlogBundle\EntryProvider\DoctrineORMEntryProvider</parameter>
         <parameter key="bloghoven.doctrine_orm_entry.alias">BloghovenBlogBundle:Entry</parameter>
+        <parameter key="bloghoven.blosxom_dir_entry_provider.class">Bloghoven\Bundle\BlogBundle\EntryProvider\BlosxomDirEntryProvider</parameter>
+        <parameter key="bloghoven.blosxom_dir_entry_provider.datadir">/Users/magnus/Developer/Blosxom/data</parameter>
     </parameters>
 
     <services>
@@ -21,6 +23,10 @@
         <argument type="service" id="bloghoven.doctrine_orm_entry_repo" />
       </service>
 
-      <service id="bloghoven.entry_provider" alias="bloghoven.doctrine_orm_entry_provider" />
+      <service id="bloghoven.blosxom_dir_entry_provider" class="%bloghoven.blosxom_dir_entry_provider.class%">
+        <argument>%bloghoven.blosxom_dir_entry_provider.datadir%</argument>
+      </service>
+
+      <service id="bloghoven.entry_provider" alias="bloghoven.blosxom_dir_entry_provider" />
     </services>
 </container>
