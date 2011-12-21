@@ -2,15 +2,22 @@
 
 namespace Bloghoven\Bundle\BlogBundle\Entity;
 
+use Bloghoven\Bundle\BlogBundle\EntryProvider\Interfaces\ImmutableEntryInterface;
+
 /**
  * Bloghoven\Bundle\BlogBundle\Entity\Entry
  */
-class Entry
+class Entry implements ImmutableEntryInterface
 {
     /**
-     * @var integer $id
+     * @var mixed $id
      */
     private $id;
+
+    /**
+     * @var string $permalink_id
+     */
+    private $permalink_id;
 
     /**
      * @var string $title
@@ -42,134 +49,92 @@ class Entry
      */
     private $is_draft;
 
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
 
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * Set title
-     *
-     * @param string $title
-     */
+    public function setPermalinkId($permalink_id)
+    {
+        $this->permalink_id = $permalink_id;
+    }
+
+    public function getPermalinkId()
+    {
+        if ($this->permalink_id != null)
+        {
+            return $this->permalink_id;            
+        }
+        return $this->getId();
+    }
+
     public function setTitle($title)
     {
         $this->title = $title;
     }
 
-    /**
-     * Get title
-     *
-     * @return string 
-     */
     public function getTitle()
     {
         return $this->title;
     }
 
-    /**
-     * Set excerpt
-     *
-     * @param string $excerpt
-     */
     public function setExcerpt($excerpt)
     {
         $this->excerpt = $excerpt;
     }
 
-    /**
-     * Get excerpt
-     *
-     * @return string 
-     */
     public function getExcerpt()
     {
         return $this->excerpt;
     }
 
-    /**
-     * Set content
-     *
-     * @param text $content
-     */
     public function setContent($content)
     {
         $this->content = $content;
     }
 
-    /**
-     * Get content
-     *
-     * @return text 
-     */
     public function getContent()
     {
         return $this->content;
     }
 
-    /**
-     * Set posted_at
-     *
-     * @param DateTime $postedAt
-     */
     public function setPostedAt(\DateTime $postedAt)
     {
         $this->posted_at = $postedAt;
     }
 
-    /**
-     * Get posted_at
-     *
-     * @return datetime 
-     */
     public function getPostedAt()
     {
         return $this->posted_at;
     }
 
-    /**
-     * Set modified_at
-     *
-     * @param datetime $modifiedAt
-     */
     public function setModifiedAt(\DateTime $modifiedAt)
     {
         $this->modified_at = $modifiedAt;
     }
 
-    /**
-     * Get modified_at
-     *
-     * @return DateTime 
-     */
     public function getModifiedAt()
     {
         return $this->modified_at;
     }
 
-    /**
-     * Set is_draft
-     *
-     * @param boolean $isDraft
-     */
     public function setIsDraft($isDraft)
     {
         $this->is_draft = $isDraft;
     }
 
-    /**
-     * Get is_draft
-     *
-     * @return boolean 
-     */
-    public function getIsDraft()
+    public function isDraft()
     {
         return $this->is_draft;
+    }
+
+    public function getCategories()
+    {
+        # code...
     }
 }

@@ -1,0 +1,5 @@
+{% extends "BloghovenAbstractThemeBundle::layout.html.twig" %}
+
+{% block main %}
+  {% include "BloghovenAbstractThemeBundle::short-entry.html.twig" with {'entry': entry} only %}
+{% endblock %}

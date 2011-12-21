@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="bloghoven.blosxom_dir_entry_provider.class">Bloghoven\Bundle\BlosxomDirProviderBundle\EntryProvider\BlosxomDirEntryProvider</parameter>
+    </parameters>
+
+    <services>
+        <service id="bloghoven.blosxom_dir_entry_provider" class="%bloghoven.blosxom_dir_entry_provider.class%">
+            <argument />
+            <tag name="bloghoven.provider" id="blosxom" />
+        </service>
+    </services>
+</container>

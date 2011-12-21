@@ -1,6 +1,6 @@
 <article>
   <header>
-    <h1>{{entry.title}}</h1>
+    <h1><a href="{{path('Bloghoven_permalink', {'permalink_id': entry.permalinkId})}}">{{entry.title}}</a></h1>
   </header>
   {{entry.content | markdown}}
   <footer>

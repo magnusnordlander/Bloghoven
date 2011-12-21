@@ -4,4 +4,8 @@
   {% for entry in pager.currentPageResults %}
     {% include "BloghovenAbstractThemeBundle::short-entry.html.twig" with {'entry': entry} only %}
   {% endfor %}
+  
+  <div class="pagerfanta">
+    {{ pagerfanta(pager, 'twitter_bootstrap', {'routeName': 'Bloghoven_index_page'}) }}
+  </div>
 {% endblock %}

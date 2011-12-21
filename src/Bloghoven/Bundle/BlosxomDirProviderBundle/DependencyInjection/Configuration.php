@@ -1,6 +1,6 @@
 <?php
 
-namespace Bloghoven\Bundle\BlogBundle\DependencyInjection;
+namespace Bloghoven\Bundle\BlosxomDirProviderBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -18,11 +18,11 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('bloghoven_blog');
+        $rootNode = $treeBuilder->root('bloghoven_blosxom_dir_provider');
 
         $rootNode
             ->children()
-                ->scalarNode('provider')->defaultValue('doctrine.orm')->end()
+                ->scalarNode('data_dir')->defaultValue('%kernel.root_dir%/data')->end()
             ->end()
         ;
 

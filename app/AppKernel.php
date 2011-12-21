@@ -21,6 +21,8 @@ class AppKernel extends Kernel
             new Bloghoven\Bundle\AbstractThemeBundle\BloghovenAbstractThemeBundle(),
             new Knp\Bundle\MarkdownBundle\KnpMarkdownBundle(),
             new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
+            new Mopa\BootstrapBundle\MopaBootstrapBundle(),
+            new Bloghoven\Bundle\BlosxomDirProviderBundle\BloghovenBlosxomDirProviderBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

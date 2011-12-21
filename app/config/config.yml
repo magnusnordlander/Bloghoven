@@ -59,4 +59,8 @@ jms_security_extra:
     secure_controllers:  true
     secure_all_services: false
 
-bloghoven_blog: ~
+bloghoven_blog: 
+    provider: blosxom
+
+bloghoven_blosxom_dir_provider:
+    data_dir: /Users/magnus/Developer/Blosxom/data

@@ -7,4 +7,13 @@
     <route id="Bloghoven_index" pattern="/">
         <default key="_controller">BloghovenBlogBundle:Frontend\Home:home</default>
     </route>
+
+    <route id="Bloghoven_index_page" pattern="/page/{page}">
+        <default key="_controller">BloghovenBlogBundle:Frontend\Home:home</default>
+    </route>
+
+    <route id="Bloghoven_permalink" pattern="/permalink/{permalink_id}">
+        <default key="_controller">BloghovenBlogBundle:Frontend\Permalink:permalink</default>
+        <requirement key="permalink_id">.+</requirement>
+    </route>
 </routes>
