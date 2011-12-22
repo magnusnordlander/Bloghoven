@@ -2,7 +2,7 @@
 
 namespace Bloghoven\Bundle\BlosxomDirProviderBundle\EntryProvider;
 
-use Bloghoven\Bundle\BlogBundle\Entity\Entry;
+use Bloghoven\Bundle\BlosxomDirProviderBundle\Entity\Entry;
 
 use Bloghoven\Bundle\BlogBundle\EntryProvider\Interfaces\EntryProviderInterface;
 
@@ -10,18 +10,28 @@ use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\ArrayAdapter;
 
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class BlosxomDirEntryProvider implements EntryProviderInterface
+class BlosxomDirEntryProvider implements EntryProviderInterface, ContainerAwareInterface
 {
   protected $datadir;
   protected $file_extension;
   protected $depth;
+
+  // Only use this to get entity prototypes, otherwise $kittens--
+  protected $container;
 
   public function __construct($datadir, $file_extension = 'txt', $depth = 0)
   {
     $this->datadir = $datadir;
     $this->file_extension = $file_extension;
     $this->depth = (int)$depth;
+  }
+
+  public function setContainer(ContainerInterface $container = null)
+  {
+    $this->container = $container;
   }
 
   public function getHomeEntriesPager()
@@ -46,7 +56,10 @@ class BlosxomDirEntryProvider implements EntryProviderInterface
 
     foreach ($finder as $file) 
     {
-      $entries[] = $this->hydrateEntryFromFile($file);
+      $entry = $this->container->get('bloghoven.blosxom_dir_provider.entry.prototype');
+      $entry->setFileInfo($file);
+      $entry->setDataDir($this->datadir);
+      $entries[] = $entry;
     }
 
     return new Pagerfanta(new ArrayAdapter($entries));
@@ -63,55 +76,11 @@ class BlosxomDirEntryProvider implements EntryProviderInterface
 
     if ($file->isFile())
     {
-      return $this->hydrateEntryFromFile($file);
+      $entry = $this->container->get('bloghoven.blosxom_dir_provider.entry.prototype');
+      $entry->setFileInfo($file);
+      $entry->setDataDir($this->datadir);
+      return $entry;
     }
     return null;
-  }
-
-  protected function hydrateEntryFromFile(\SplFileInfo $file)
-  {
-    $entry = new Entry;
-
-    $entry->setPostedAt(\DateTime::createFromFormat('U', $file->getMTime()));
-    $entry->setModifiedAt(\DateTime::createFromFormat('U', $file->getMTime()));
-
-    $full_path = $file->getPath();
-
-    if (substr($full_path, 0, strlen($this->datadir)) == $this->datadir)
-    {
-      $relative_path = trim(substr($full_path, strlen($this->datadir)), '/');
-    }
-    else
-    {
-      throw new \RuntimeException("Path of entry is not as expected");
-    }
-
-    $base_name = $file->getBaseName('.'.$this->file_extension);
-
-    $id = "";
-
-    if ($relative_path != "")
-    {
-      $id .= $relative_path.'/';
-    }
-    $id .= $base_name;
-    $entry->setId($id);
-
-    $opened_file = $file->openFile();
-
-    $title = $opened_file->current();
-    $content = "";
-    $opened_file->next();
-
-    while (!$opened_file->eof())
-    {
-      $content .= $opened_file->current();
-      $opened_file->next();
-    }
-
-    $entry->setTitle(trim($title));
-    $entry->setContent($content);
-
-    return $entry;
   }
 }
