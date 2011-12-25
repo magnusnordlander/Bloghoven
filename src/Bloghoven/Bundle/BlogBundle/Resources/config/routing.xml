@@ -8,12 +8,13 @@
         <default key="_controller">BloghovenBlogBundle:Frontend\Home:home</default>
     </route>
 
-    <route id="Bloghoven_index_page" pattern="/page/{page}">
-        <default key="_controller">BloghovenBlogBundle:Frontend\Home:home</default>
+    <route id="Bloghoven_permalink" pattern="/permalink/{permalink_id}">
+        <default key="_controller">BloghovenBlogBundle:Frontend\Entry:permalink</default>
+        <requirement key="permalink_id">.+</requirement>
     </route>
 
-    <route id="Bloghoven_permalink" pattern="/permalink/{permalink_id}">
-        <default key="_controller">BloghovenBlogBundle:Frontend\Permalink:permalink</default>
+    <route id="Bloghoven_category_permalink" pattern="/category/{permalink_id}">
+        <default key="_controller">BloghovenBlogBundle:Frontend\Category:entries</default>
         <requirement key="permalink_id">.+</requirement>
     </route>
 </routes>

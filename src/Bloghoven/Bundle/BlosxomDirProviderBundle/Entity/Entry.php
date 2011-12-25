@@ -2,18 +2,13 @@
 
 namespace Bloghoven\Bundle\BlosxomDirProviderBundle\Entity;
 
-use Bloghoven\Bundle\BlogBundle\EntryProvider\Interfaces\ImmutableEntryInterface;
+use Bloghoven\Bundle\BlogBundle\ContentProvider\Interfaces\ImmutableEntryInterface;
 
 /**
 * 
 */
-class Entry implements ImmutableEntryInterface
+class Entry extends FileBasedEntity implements ImmutableEntryInterface
 {
-  protected $file_info;
-  protected $data_dir;
-
-  protected $category_factory;
-
   // Getting the permalink id is kind of expensive, so
   // we'll cache it.
   protected $permalink_id;
@@ -22,35 +17,6 @@ class Entry implements ImmutableEntryInterface
   // one of them, we'll make sure to preload the other.
   protected $title;
   protected $contents;
-
-  public function setFileInfo(\SplFileInfo $file_info)
-  {
-    $this->file_info = $file_info;
-  }
-
-  public function setDataDir($data_dir)
-  {
-    $this->data_dir = $data_dir;
-  }
-
-  public function setCategoryFactory(CategoryFactory $cf)
-  {
-    $this->category_factory = $cf;
-  }
-
-  protected function getRelativePath()
-  {
-    $full_path = $this->file_info->getPath();
-
-    if (substr($full_path, 0, strlen($this->data_dir)) == $this->data_dir)
-    {
-      return trim(substr($full_path, strlen($this->data_dir)), '/');
-    }
-    else
-    {
-      throw new \RuntimeException("Path of entry is not as expected");
-    }
-  }
 
   protected function getFileExtension()
   {
@@ -124,7 +90,7 @@ class Entry implements ImmutableEntryInterface
 
   public function getModifiedAt()
   {
-    return \DateTime::createFromFormat('U', $this->file->getMTime());
+    return \DateTime::createFromFormat('U', $this->file_info->getMTime());
   }
 
   public function isDraft()
@@ -134,6 +100,12 @@ class Entry implements ImmutableEntryInterface
 
   public function getCategories()
   {
-    return $this->category_factory->getCategoriesFromPathFragment($this->getRelativePath());
+    $parent = $this->getParent();
+
+    if (!$parent)
+    {
+      return null;
+    }
+    return array($parent);
   }
 }

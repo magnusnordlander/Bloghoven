@@ -1,6 +1,6 @@
 <?php
 
-namespace Bloghoven\Bundle\BlogBundle\EntryProvider\Interfaces;
+namespace Bloghoven\Bundle\BlogBundle\ContentProvider\Interfaces;
 
 interface ImmutableEntryInterface
 {

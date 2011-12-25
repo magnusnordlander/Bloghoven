@@ -12,15 +12,13 @@
     <![endif]-->
 
     <!-- Le styles -->
-    <link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css">
+    <link rel="stylesheet" href="{{asset('bundles/bloghovenabstracttheme/css/bootstrap.css')}}" />
+    {#<link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css">#}
     <style type="text/css">
       /* Override some defaults */
       html, body {
         background-color: #eee;
       }
-{#      body {
-        padding-top: 40px; /* 40px to make the container go all the way to the bottom of the topbar */
-      }#}
       .container > footer p {
         text-align: center; /* center align it with the container */
       }
@@ -73,24 +71,6 @@
 
   <body>
 
-{#    <div class="topbar">
-      <div class="fill">
-        <div class="container">
-          <a class="brand" href="#">Project name</a>
-          <ul class="nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-          <form action="" class="pull-right">
-            <input class="input-small" type="text" placeholder="Username">
-            <input class="input-small" type="password" placeholder="Password">
-            <button class="btn" type="submit">Sign in</button>
-          </form>
-        </div>
-      </div>
-    </div> #}
-
     <div class="container">
 
       <div class="content">
@@ -104,7 +84,8 @@
             {% endblock %}
           </div>
           <div class="span4">
-            <h3>Secondary content</h3>
+            <h3>Categories</h3>
+            {% render 'BloghovenBlogBundle:Frontend\\Category:tree' %}
           </div>
         </div>
       </div>

@@ -1,0 +1,18 @@
+{% macro category_li(category) %}
+  <li>
+    <a href="{{path('Bloghoven_category_permalink', {'permalink_id': category.permalinkId})}}">{{category.name}}</a>
+    {% if category.children|length > 0 %}
+      <ul>
+        {% for child in category.children %}
+          {{_self.category_li(child)}}
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </li>
+{% endmacro %}
+
+<ul>
+  {% for category in roots %}
+    {{_self.category_li(category)}}
+  {% endfor %}
+</ul>

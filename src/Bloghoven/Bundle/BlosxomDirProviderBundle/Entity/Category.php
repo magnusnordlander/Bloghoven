@@ -2,33 +2,47 @@
 
 namespace Bloghoven\Bundle\BlosxomDirProviderBundle\Entity;
 
-use Bloghoven\Bundle\BlogBundle\EntryProvider\Interfaces\ImmutableCategoryInterface;
+use Bloghoven\Bundle\BlogBundle\ContentProvider\Interfaces\ImmutableCategoryInterface;
+
+use Symfony\Component\Finder\Finder;
 
 /**
 * 
 */
-class Category implements ImmutableCategoryInterface
+class Category extends FileBasedEntity implements ImmutableCategoryInterface
 {
-  protected $path_fragment;
-
-  public function __construct($path_fragment)
-  {
-    $this->path_fragment = $path_fragment;
-  }
-
   public function getName()
   {
-    $explosion = explode('/', $this->path_fragment);
-    return end($explosion);
+    return $this->file_info->getBasename();
   }
 
   public function getPermalinkId()
   {
-    return $this->path_fragment;
+    return $this->getRelativePathname();
   }
 
-  public function getEntriesPager()
+  public function getParent()
   {
+    return parent::getParent();
+  }
+
+  public function getChildren()
+  {
+    $finder = new Finder();
     
+    $finder
+      ->directories()
+      ->in($this->file_info->getPathname())
+      ->depth('== 0')
+      ->sortByName();
+
+    $categories = array();
+
+    foreach ($finder as $dir) 
+    {
+      $categories[] = new Category($dir, $this->data_dir);
+    }
+
+    return $categories;
   }
 }

@@ -23,6 +23,7 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->scalarNode('provider')->defaultValue('doctrine.orm')->end()
+                ->scalarNode('per_page')->defaultValue(10)->end()
             ->end()
         ;
 

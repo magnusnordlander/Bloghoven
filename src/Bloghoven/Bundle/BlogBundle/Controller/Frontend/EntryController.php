@@ -8,11 +8,11 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 /**
 * 
 */
-class PermalinkController extends Controller
+class EntryController extends Controller
 {
   public function permalinkAction($permalink_id)
   {
-    $entry = $this->get('bloghoven.entry_provider')->getEntryWithPermalinkId($permalink_id);
+    $entry = $this->get('bloghoven.content_provider')->getEntryWithPermalinkId($permalink_id);
 
     if (!$entry)
     {

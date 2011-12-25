@@ -5,28 +5,18 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="bloghoven.blosxom_dir_provider.entry_provider.class">Bloghoven\Bundle\BlosxomDirProviderBundle\EntryProvider\BlosxomDirEntryProvider</parameter>
-        <parameter key="bloghoven.blosxom_dir_provider.entry.prototype.class">Bloghoven\Bundle\BlosxomDirProviderBundle\Entity\Entry</parameter>
-        <parameter key="bloghoven.blosxom_dir_provider.category_factory.class">Bloghoven\Bundle\BlosxomDirProviderBundle\Entity\CategoryFactory</parameter>
+        <parameter key="bloghoven.blosxom_dir_provider.content_provider.class">Bloghoven\Bundle\BlosxomDirProviderBundle\ContentProvider\BlosxomDirContentProvider</parameter>
     </parameters>
 
     <services>
-        <service id="bloghoven.blosxom_dir_provider.entry_provider" class="%bloghoven.blosxom_dir_provider.entry_provider.class%">
+        <service id="bloghoven.blosxom_dir_provider.content_provider" class="%bloghoven.blosxom_dir_provider.content_provider.class%">
             <argument />
 
             <call method="setContainer">
                 <argument type="service" id="service_container" />
             </call>
 
-            <tag name="bloghoven.provider" id="blosxom" />
-        </service>
-
-        <service id="bloghoven.blosxom_dir_provider.category_factory" class="%bloghoven.blosxom_dir_provider.category_factory.class%" />
-
-        <service id="bloghoven.blosxom_dir_provider.entry.prototype" class="%bloghoven.blosxom_dir_provider.entry.prototype.class%" scope="prototype">
-            <call method="setCategoryFactory">
-                <argument type="service" id="bloghoven.blosxom_dir_provider.category_factory" />
-            </call>
+            <tag name="bloghoven.content_provider" id="blosxom" />
         </service>
     </services>
 </container>

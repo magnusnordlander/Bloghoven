@@ -30,7 +30,7 @@ class BloghovenBlosxomDirProviderExtension extends Extension
 
     protected function updateProviderDataDir(ContainerBuilder $container, $config)
     {
-        $def = $container->getDefinition('bloghoven.blosxom_dir_provider.entry_provider');
-        $def->setArguments(array($config['data_dir']));
+        $def = $container->getDefinition('bloghoven.blosxom_dir_provider.content_provider');
+        $def->setArguments(array($config['data_dir'], $config['file_extension']));
     }
 }

@@ -3,18 +3,19 @@
 namespace Bloghoven\Bundle\BlogBundle\Controller\Frontend;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
 * 
 */
 class HomeController extends Controller
 {
-  public function homeAction($page = 1)
+  public function homeAction(Request $request)
   {
-    $pagerfanta = $this->get('bloghoven.entry_provider')->getHomeEntriesPager();
+    $pagerfanta = $this->get('bloghoven.content_provider')->getHomeEntriesPager();
 
-    $pagerfanta->setMaxPerPage(10);
-    $pagerfanta->setCurrentPage($page);
+    $pagerfanta->setMaxPerPage($this->container->getParameter('bloghoven.per_page'));
+    $pagerfanta->setCurrentPage($request->query->get('page', 1));
 
     return $this->render('BloghovenAbstractThemeBundle:Home:home.html.twig', array('pager' => $pagerfanta));
   }
