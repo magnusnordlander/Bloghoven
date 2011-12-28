@@ -14,7 +14,7 @@ class HomeController extends Controller
   {
     $pagerfanta = $this->get('bloghoven.content_provider')->getHomeEntriesPager();
 
-    $pagerfanta->setMaxPerPage($this->container->getParameter('bloghoven.per_page'));
+    $pagerfanta->setMaxPerPage($this->get('bloghoven.settings')->get('per_page'));
     $pagerfanta->setCurrentPage($request->query->get('page', 1));
 
     return $this->render('BloghovenAbstractThemeBundle:Home:home.html.twig', array('pager' => $pagerfanta));

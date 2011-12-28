@@ -24,6 +24,8 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('provider')->defaultValue('doctrine.orm')->end()
                 ->scalarNode('per_page')->defaultValue(10)->end()
+                ->scalarNode('name')->defaultValue('Your blog')->end()
+                ->scalarNode('tagline')->defaultValue('Just another Bloghoven blog')->end()
             ->end()
         ;
 

@@ -20,6 +20,8 @@ framework:
 twig:
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
+    globals:
+        bloghoven_settings: @bloghoven.settings
 
 # Assetic Configuration
 assetic:
@@ -61,6 +63,8 @@ jms_security_extra:
 
 bloghoven_blog: 
     provider: blosxom
+    name: A blog of two cities
+    tagline: The most famous work in the history of fictional blogs
 
 bloghoven_blosxom_dir_provider:
     data_dir: /Users/magnus/Developer/Blosxom/data
