@@ -12,17 +12,12 @@ use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\ArrayAdapter;
 
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class BlosxomDirContentProvider implements ContentProviderInterface, ContainerAwareInterface
+class BlosxomDirContentProvider implements ContentProviderInterface
 {
   protected $datadir;
   protected $file_extension;
   protected $depth;
-
-  // Only use this to get entity prototypes, otherwise $kittens--
-  protected $container;
 
   public function __construct($datadir, $file_extension = 'txt', $depth = 0)
   {
@@ -31,10 +26,20 @@ class BlosxomDirContentProvider implements ContentProviderInterface, ContainerAw
     $this->depth = (int)$depth;
   }
 
-  public function setContainer(ContainerInterface $container = null)
+  public function getDataDir()
   {
-    $this->container = $container;
+    return $this->datadir;
   }
+
+  protected function validatePermalinkId($permalink_id)
+  {
+    if (strpos($permalink_id, '..') !== false)
+    {
+      throw new \RuntimeException("Permalinks with double dots are not allowed with the current provider, and are always advised against.");
+    }
+  }
+
+  /* ------------------ ContentProviderInterface methods ---------------- */
 
   public function getHomeEntriesPager()
   {
@@ -58,7 +63,7 @@ class BlosxomDirContentProvider implements ContentProviderInterface, ContainerAw
 
     foreach ($finder as $file) 
     {
-      $entries[] = new Entry($file, $this->datadir);
+      $entries[] = new Entry($file, $this);
     }
 
     return new Pagerfanta(new ArrayAdapter($entries));
@@ -88,7 +93,7 @@ class BlosxomDirContentProvider implements ContentProviderInterface, ContainerAw
 
     foreach ($finder as $file) 
     {
-      $entries[] = new Entry($file, $this->datadir);
+      $entries[] = new Entry($file, $this);
     }
 
     return new Pagerfanta(new ArrayAdapter($entries));
@@ -108,18 +113,10 @@ class BlosxomDirContentProvider implements ContentProviderInterface, ContainerAw
 
     foreach ($finder as $dir) 
     {
-      $categories[] = new Category($dir, $this->datadir);
+      $categories[] = new Category($dir, $this);
     }
 
     return $categories;
-  }
-
-  protected function validatePermalinkId($permalink_id)
-  {
-    if (strpos($permalink_id, '..') !== false)
-    {
-      throw new \RuntimeException("Permalinks with double dots are not allowed with the current provider, and are always advised against.");
-    }
   }
 
   public function getEntryWithPermalinkId($permalink_id)
@@ -130,7 +127,7 @@ class BlosxomDirContentProvider implements ContentProviderInterface, ContainerAw
 
     if ($file->isFile())
     {
-      return new Entry($file, $this->datadir);
+      return new Entry($file, $this);
     }
     return null;
   }
@@ -143,7 +140,7 @@ class BlosxomDirContentProvider implements ContentProviderInterface, ContainerAw
 
     if ($dir->isDir())
     {
-      return new Category($dir, $this->datadir);
+      return new Category($dir, $this);
     }
     return null;
   }

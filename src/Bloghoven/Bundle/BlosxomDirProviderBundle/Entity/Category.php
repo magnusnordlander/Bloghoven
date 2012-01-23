@@ -40,7 +40,7 @@ class Category extends FileBasedEntity implements ImmutableCategoryInterface
 
     foreach ($finder as $dir) 
     {
-      $categories[] = new Category($dir, $this->data_dir);
+      $categories[] = new Category($dir, $this->content_provider);
     }
 
     return $categories;

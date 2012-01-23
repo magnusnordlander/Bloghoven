@@ -2,18 +2,25 @@
 
 namespace Bloghoven\Bundle\BlosxomDirProviderBundle\Entity;
 
+use Bloghoven\Bundle\BlosxomDirProviderBundle\ContentProvider\BlosxomDirContentProvider;
+
 /**
 * 
 */
 abstract class FileBasedEntity
 {
   protected $file_info;
+  protected $content_provider;
+
   protected $data_dir;
   protected $data_dir_info;
 
-  public function __construct(\SplFileInfo $file_info, $data_dir)
+  public function __construct(\SplFileInfo $file_info, BlosxomDirContentProvider $content_provider)
   {
     $this->file_info = $file_info;
+    $this->content_provider = $content_provider;
+
+    $data_dir = $content_provider->getDataDir();
     $this->data_dir = $data_dir;
     $this->data_dir_info = new \SplFileInfo($data_dir);
   }
@@ -55,7 +62,7 @@ abstract class FileBasedEntity
   {
     if ($this->file_info->getPathInfo()->getRealPath() != $this->data_dir_info->getRealPath())
     {
-      return new Category($this->file_info->getPathInfo(), $this->data_dir);      
+      return new Category($this->file_info->getPathInfo(), $this->content_provider);      
     }
     return null;
   }

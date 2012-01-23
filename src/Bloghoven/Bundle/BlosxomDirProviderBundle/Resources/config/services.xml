@@ -12,10 +12,6 @@
         <service id="bloghoven.blosxom_dir_provider.content_provider" class="%bloghoven.blosxom_dir_provider.content_provider.class%">
             <argument />
 
-            <call method="setContainer">
-                <argument type="service" id="service_container" />
-            </call>
-
             <tag name="bloghoven.content_provider" id="blosxom" />
         </service>
     </services>
